@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimCortex AI | Automated Health Capital Auditing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { background: linear-gradient(135deg, #ffffff 40%, #4c0519 100%); overflow-x: hidden; }
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.85; }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(76, 5, 25, 0.1); }
+    </style>
+</head>
+<body class="text-slate-900 font-sans selection:bg-rose-900 selection:text-white">
+
+    <div id="canvas-container"></div>
+
+    <nav class="relative z-10 max-w-7xl mx-auto px-6 py-6 flex justify-between items-center bg-white/60 backdrop-blur-md border-b border-rose-950/10">
+        <div class="text-2xl font-black tracking-tighter text-rose-950 flex items-center gap-2">
+            <span class="text-rose-800">🛡️</span> CLAIM<span class="text-rose-700 font-light">CORTEX</span> <span class="text-[10px] bg-rose-900 text-white font-bold px-2 py-0.5 rounded-full uppercase tracking-widest">AI</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-rose-950/70">
+            <a href="#about" class="hover:text-rose-900 transition">About Venture</a>
+            <a href="#mission" class="hover:text-rose-900 transition">Strategic Mandate</a>
+            <a href="#contact" class="hover:text-rose-900 transition">Contact Headquarters</a>
+        </div>
+        <a href="#onboard" class="bg-rose-900 hover:bg-rose-800 text-white font-bold tracking-wider text-xs uppercase px-5 py-3 rounded-xl shadow-xl transition-all duration-300 transform hover:scale-105">
+            Initialize Audit
+        </a>
+    </nav>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-4 pt-20 pb-32 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+            <span class="text-xs font-black uppercase tracking-widest bg-white text-rose-900 px-4 py-2 rounded-full border border-rose-900/20 shadow-md inline-block">
+                Contingency-Driven Capital Protection Engine
+            </span>
+            <h1 class="text-5xl sm:text-7xl font-black tracking-tight text-rose-950 leading-none">
+                Claw Back Systemic <br><span class="text-rose-800">Healthcare Waste.</span>
+            </h1>
+            <p class="text-lg text-rose-950/80 font-medium max-w-xl">
+                ClaimCortex AI automates historical health insurance ledger compilation, highlighting, disputing, and recovering hidden corporate losses with zero up-front financial risk.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                <a href="#onboard" class="bg-rose-900 hover:bg-rose-800 text-center text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5">
+                    Secure Free Corporate Assessment
+                </a>
+                <a href="#about" class="bg-white/80 hover:bg-white text-center text-rose-950 font-bold py-4 px-8 rounded-xl border border-rose-950/20 transition-all">
+                    Review Architecture
+                </a>
+            </div>
+        </div>
+
+        <div id="onboard" class="lg:col-span-5 relative">
+            <div class="glass-panel p-8 rounded-3xl shadow-2xl relative z-10">
+                <h3 class="text-xl font-black text-rose-950 mb-1">Request Operational Integration</h3>
+                <p class="text-xs text-rose-900/60 font-semibold uppercase tracking-wider mb-6">Contingency Execution Model (80% / 20%)</p>
+                
+                <form id="leadForm" class="space-y-4">
+                    <input type="text" id="name" placeholder="Executive Corporate Name" required class="w-full bg-white/90 border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm text-rose-950 font-medium outline-none shadow-inner transition">
+                    <input type="email" id="email" placeholder="Official Business Email Address" required class="w-full bg-white/90 border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm text-rose-950 font-medium outline-none shadow-inner transition">
+                    <input type="text" id="company" placeholder="Enterprise Institution Title" required class="w-full bg-white/90 border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm text-rose-950 font-medium outline-none shadow-inner transition">
+                    <button type="submit" class="w-full bg-rose-900 hover:bg-rose-800 text-white font-bold tracking-wider uppercase text-xs py-4 rounded-xl shadow-md transition-all duration-300">
+                        Register B2B Account Matrix
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <section id="about" class="relative z-10 bg-white/90 border-t border-b border-rose-900/10 py-24 px-6">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-4">
+                <h2 class="text-xs font-black uppercase tracking-widest text-rose-800">Who We Are & What We Do</h2>
+                <h3 class="text-3xl font-black text-rose-950">Systematically Eradicating Institutional Billing Arbitrage.</h3>
+                <p class="text-sm text-slate-700 leading-relaxed">
+                    ClaimCortex AI was initialized by specialized medical claim auditors, software engineers, and legal experts to eliminate non-compliant billing inflation. Our platform deep-scans every single itemized ledger line against regulatory policy frameworks automatically.
+                </p>
+            </div>
+            <div class="bg-rose-950 p-8 rounded-2xl border border-rose-900 shadow-2xl text-center">
+                <span class="text-rose-400 font-mono text-xs tracking-widest uppercase block mb-2">// GLOBAL SYSTEM MOTTO</span>
+                <blockquote class="text-2xl font-serif font-bold italic text-white leading-tight">
+                    "Absolute Transparency. Guaranteed Recovery. Zero Friction Capital Enforcement."
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section id="mission" class="relative z-10 py-24 max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="bg-white/60 p-8 rounded-3xl border border-rose-900/10 backdrop-blur-sm order-2 md:order-1">
+            <h4 class="text-lg font-black text-rose-950 mb-4">Why We Do It</h4>
+            <p class="text-sm text-rose-950/80 leading-relaxed font-medium">
+                Over 80% of major institutional medical bills compile dynamic internal calculation coding discrepancies. These errors systematically leak billions of dollars annually from corporate balances. We believe businesses deserve strict defense parameters to enforce pricing compliance against medical providers.
+            </p>
+        </div>
+        <div class="space-y-4 order-1 md:order-2">
+            <h2 class="text-xs font-black uppercase tracking-widest text-rose-800">Automated Financial Integrity</h2>
+            <h3 class="text-3xl font-black text-rose-950">Protecting Balance Sheets Globally.</h3>
+        </div>
+    </section>
+
+    <section id="contact" class="relative z-10 bg-rose-950 text-white py-24 px-6 border-t border-rose-900">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-5 space-y-6">
+                <h3 class="text-3xl font-black tracking-tight">Establish Communication</h3>
+                <p class="text-sm text-rose-200/70">
+                    Connect with our primary transaction operations hub. We deploy secure pipeline data solutions across all operational time zones.
+                </p>
+                <div class="space-y-3 font-mono text-xs">
+                    <div class="flex items-center gap-3"><span>📍</span> <span>Airport Residential, Accra, Ghana 🇬🇭</span></div>
+                    <div class="flex items-center gap-3"><span>📧</span> <span>ops@claimcortex.ai</span></div>
+                    <div class="flex items-center gap-3"><span>🛡️</span> <span>HIPAA & GDPR Secure Compliant Platform</span></div>
+                </div>
+            </div>
+            <div class="lg:col-span-7 h-64 md:h-80 bg-black/40 rounded-3xl border border-rose-900 flex items-center justify-center relative overflow-hidden" id="globe-viewport">
+                <span class="absolute bottom-4 left-4 font-mono text-[10px] tracking-widest text-rose-400 uppercase animate-pulse">📡 Global Telemetry Map Matrix Active</span>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- STEP 1: INITIALIZE MAIN BACKGROUND ENVIRONMENT ENGINE ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        camera.position.z = 15;
+
+        // --- STEP 2: MATHEMATICAL ULTRA-4K PARTICLE CADUCEUS SYNCHRONIZATION ---
+        // Generates an elegant double-helix snake array winding around a central staff axis
+        const particleCount = 2800;
+        const caduceusGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+
+        const wineColor = new THREE.Color('#4c0519');
+        const whiteColor = new THREE.Color('#ffffff');
+
+        for (let i = 0; i < particleCount; i++) {
+            let x = 0, y = 0, z = 0;
+            // Split index to render separate components: 0=Staff, 1=Helix A, 2=Helix B
+            const type = i % 3;
+            
+            if (type === 0) {
+                // Central Staff pillar line
+                x = (Math.random() - 0.5) * 0.15;
+                y = (Math.random() - 0.5) * 14;
+                z = (Math.random() - 0.5) * 0.15;
+            } else {
+                // Entwined double-helix matrix calculations
+                const t = (Math.random() - 0.5) * 12; 
+                const frequency = 2.2;
+                const radius = 1.8;
+                const angle = t * frequency + (type === 1 ? 0 : Math.PI);
+                x = Math.sin(angle) * radius * (1.2 - Math.abs(t)/14);
+                y = t;
+                z = Math.cos(angle) * radius * (1.2 - Math.abs(t)/14);
+            }
+
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+
+            // Interpolate color gradients based on height position mapping
+            const mixedColor = wineColor.clone().lerp(whiteColor, (y + 6) / 12);
+            colors[i * 3] = mixedColor.r;
+            colors[i * 3 + 1] = mixedColor.g;
+            colors[i * 3 + 2] = mixedColor.b;
+        }
+
+        caduceusGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        caduceusGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        const caduceusMaterial = new THREE.PointsMaterial({
+            size: 0.08,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.75,
+            blending: THREE.NormalBlending
+        });
+
+        const caduceusParticles = new THREE.Points(caduceusGeometry, caduceusMaterial);
+        caduceusParticles.position.x = 2.5; // Offset right side to match layout columns
+        scene.add(caduceusParticles);
+
+        // --- STEP 3: CONSTRUCT MATH-REPLICATED INFINITY LOOP ARRAYS ---
+        // Simulates floating token nodes following an algebraic Lemniscate equation
+        const letterGroup = new THREE.Group();
+        const letterCount = 18;
+        const letterGeometries = [];
+
+        for(let i=0; i<letterCount; i++) {
+            const geom = new THREE.BoxGeometry(0.35, 0.35, 0.35);
+            const mat = new THREE.MeshBasicMaterial({ color: 0x4c0519, wireframe: true });
+            const box = new THREE.Mesh(geom, mat);
+            letterGroup.add(box);
+            letterGeometries.push(box);
+        }
+        scene.add(letterGroup);
+
+        // --- STEP 4: SEPARATE INTEGRATED GLOBE PORT CONTEXT ---
+        const gScene = new THREE.Scene();
+        const gViewport = document.getElementById('globe-viewport');
+        const gCamera = new THREE.PerspectiveCamera(45, gViewport.clientWidth / gViewport.clientHeight, 0.1, 100);
+        gCamera.position.z = 4;
+
+        const gRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        gRenderer.setSize(gViewport.clientWidth, gViewport.clientHeight);
+        gViewport.appendChild(gRenderer.domElement);
+
+        // Render an elegant glowing vector coordinate world map grid
+        const globeRadius = 1.3;
+        const globePointsCount = 900;
+        const globeGeometry = new THREE.BufferGeometry();
+        const gPositions = new Float32Array(globePointsCount * 3);
+
+        for (let i = 0; i < globePointsCount; i++) {
+            const u = Math.random();
+            const v = Math.random();
+            const theta = u * 2.0 * Math.PI;
+            const phi = Math.acos(2.0 * v - 1.0);
+            
+            gPositions[i * 3] = globeRadius * Math.sin(phi) * Math.cos(theta);
+            gPositions[i * 3 + 1] = globeRadius * Math.sin(phi) * Math.sin(theta);
+            gPositions[i * 3 + 2] = globeRadius * Math.cos(phi);
+        }
+        globeGeometry.setAttribute('position', new THREE.BufferAttribute(gPositions, 3));
+        const globeMaterial = new THREE.PointsMaterial({ color: 0xf43f5e, size: 0.04, transparent: true, opacity: 0.8 });
+        const globeParticles = new THREE.Points(globeGeometry, globeMaterial);
+        gScene.add(globeParticles);
+
+        // --- STEP 5: SYNC ANIMATION LOOPS ---
+        let clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Synchronized rotation transitions
+            caduceusParticles.rotation.y = elapsedTime * 0.4;
+            caduceusParticles.position.y = Math.sin(elapsedTime * 0.6) * 0.3;
+
+            // Infinity symbol trajectory assignment mapping for text parameters
+            letterGeometries.forEach((mesh, index) => {
+                const offset = index * (Math.PI * 2 / letterCount);
+                const t = elapsedTime * 0.5 + offset;
+                
+                // Lemniscate mathematical curve equation
+                const scale = 5 / (3 - Math.cos(2 * t));
+                mesh.position.x = scale * Math.cos(t) - 2; 
+                mesh.position.y = scale * Math.sin(2 * t) / 2;
+                mesh.position.z = Math.sin(t) * 1.5;
+                mesh.rotation.x = t * 2;
+                mesh.rotation.y = t;
+            });
+
+            globeParticles.rotation.y = elapsedTime * 0.25;
+            globeParticles.rotation.x = 0.1;
+
+            renderer.render(scene, camera);
+            gRenderer.render(gScene, gCamera);
+        }
+        animate();
+
+        // Screen Resize handling
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            gCamera.aspect = gViewport.clientWidth / gViewport.clientHeight;
+            gCamera.updateProjectionMatrix();
+            gRenderer.setSize(gViewport.clientWidth, gViewport.clientHeight);
+        });
+
+        // --- STEP 6: BACKEND LEAD PIPELINE & ALERT HOOK ---
+        document.getElementById('leadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = new FormData();
+            data.append('name', document.getElementById('name').value);
+            data.append('email', document.getElementById('email').value);
+            data.append('company', document.getElementById('company').value);
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/leads', { method: 'POST', body: data });
+                if(res.ok) {
+                    alert('🚨 [ALERT METRIC SYNC] Account logged! Operational dispatch broadcast fired to server.');
+                    document.getElementById('leadForm').reset();
+                }
+            } catch {
+                alert('FastAPI server engine is completely offline. Run main.py first.');
+            }
+        });
+    </script>
+</body>
+</html>

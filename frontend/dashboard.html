@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ClaimCortex Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-8">
+    <div class="max-w-xl mx-auto bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
+        <h2 class="text-xl font-bold text-indigo-400 mb-4">Operations Engine Workspace</h2>
+        <input type="file" id="billFile" accept="image/*" class="block w-full text-sm text-slate-400 mb-4">
+        <button id="runAudit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg transition">Process Document Engine</button>
+        
+        <div id="results" class="hidden mt-6 space-y-4 border-t border-slate-700 pt-4">
+            <div class="flex justify-between font-mono text-sm"><span>Total Found Audit Val:</span><span id="billVal" class="text-white font-bold">$0.00</span></div>
+            <div class="flex justify-between font-mono text-sm"><span>Recoverable Overcharges:</span><span id="saveVal" class="text-emerald-400 font-bold">$0.00</span></div>
+            <div id="findings" class="text-xs text-slate-400 bg-slate-950 p-3 rounded-lg space-y-1"></div>
+            <textarea id="letter" class="w-full h-32 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 outline-none" readonly></textarea>
+        </div>
+    </div>
+    <script>
+        document.getElementById('runAudit').addEventListener('click', async () => {
+            const fileInput = document.getElementById('billFile');
+            if(fileInput.files.length === 0) return alert('Choose an image file first.');
+            const data = new FormData();
+            data.append('file', fileInput.files[0]);
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/audit', { method: 'POST', body: data });
+                const json = await res.json();
+                document.getElementById('billVal').innerText = `$${json.total_billed}`;
+                document.getElementById('saveVal').innerText = `$${json.potential_savings}`;
+                document.getElementById('letter').value = json.draft_appeal_letter;
+                
+                const findDiv = document.getElementById('findings');
+                findDiv.innerHTML = '';
+                json.findings.forEach(str => { findDiv.innerHTML += `• ${str}<br>`; });
+                
+                document.getElementById('results').classList.remove('hidden');
+            } catch { alert('Engine offline.'); }
+        });
+    </script>
+</body>
+</html>

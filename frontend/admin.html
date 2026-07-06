@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ClaimCortex HQ | Admin Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans p-8">
+    <div class="max-w-5xl mx-auto">
+        <header class="flex justify-between items-center mb-10 border-b border-slate-800 pb-6">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight text-white">ClaimCortex <span class="text-indigo-500">HQ</span></h1>
+                <p class="text-sm text-slate-400 mt-1">Real-time enterprise acquisition tracking and backend database utility console.</p>
+            </div>
+            <button id="refreshBtn" class="bg-slate-900 hover:bg-slate-800 border border-slate-800 px-4 py-2 rounded-xl text-xs font-bold tracking-wide uppercase transition text-indigo-400">
+                🔄 Sync Lead Engine
+            </button>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Total B2B Pipeline Volume</span>
+                <div id="leadCount" class="text-4xl font-black text-white mt-2">0 Corporate Accounts</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl border-l-4 border-l-indigo-500">
+                <span class="text-xs font-bold uppercase tracking-widest text-indigo-400">System Deployment Region</span>
+                <div class="text-2xl font-black text-white mt-2">Accra Operations Hub 🇬🇭</div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-slate-800 bg-slate-900/50">
+                <h3 class="font-bold text-lg text-white">Inbound Corporate Pipeline Rows</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm text-slate-300">
+                    <thead class="bg-slate-950 text-xs font-semibold uppercase tracking-wider text-slate-400 border-b border-slate-800">
+                        <tr>
+                            <th class="py-4 px-6">ID</th>
+                            <th class="py-4 px-6">Executive Name</th>
+                            <th class="py-4 px-6">Corporate Email</th>
+                            <th class="py-4 px-6">Company Account</th>
+                            <th class="py-4 px-6">Capture Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadTableBody" class="divide-y divide-slate-800 font-mono">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchLeads() {
+            try {
+                const res = await fetch('http://127.0.0.1:8000/api/leads');
+                const data = await res.json();
+                
+                document.getElementById('leadCount').innerText = `${data.length} Registered Leads`;
+                
+                const tbody = document.getElementById('leadTableBody');
+                tbody.innerHTML = '';
+                
+                if(data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center py-8 text-slate-500">No data points captured in local claimcortex.db file yet.</td></tr>`;
+                    return;
+                }
+
+                data.forEach(lead => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-900/60 transition";
+                    tr.innerHTML = `
+                        <td class="py-4 px-6 text-indigo-400 font-bold">#${lead.id}</td>
+                        <td class="py-4 px-6 text-white font-sans">${lead.name}</td>
+                        <td class="py-4 px-6 text-slate-400">${lead.email}</td>
+                        <td class="py-4 px-6"><span class="bg-slate-950 text-indigo-300 px-3 py-1 rounded-full border border-slate-800 font-sans text-xs">${lead.company}</span></td>
+                        <td class="py-4 px-6 text-xs text-slate-500">${lead.timestamp}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                alert('Database fetch execution failed. Verify your FastAPI engine main.py is active.');
+            }
+        }
+
+        document.getElementById('refreshBtn').addEventListener('click', fetchLeads);
+        window.addEventListener('DOMContentLoaded', fetchLeads);
+    </script>
+</body>
+</html>
