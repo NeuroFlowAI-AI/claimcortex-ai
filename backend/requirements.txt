@@ -1,5 +1,7 @@
-fastapi
-uvicorn
-pydantic
-pillow
-pytesseract
+fastapi==0.110.0
+uvicorn==0.28.0
+pydantic==2.6.4
+Pillow==10.2.0
+pytesseract==0.3.10
+multipart==0.2.4
+python-multipart==0.0.9

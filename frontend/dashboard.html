@@ -2,41 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ClaimCortex Hub</title>
+    <title>ClaimCortex Hub | Operational Environment</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Security Gate: Redirect users immediately if token verification is missing
+        if (!localStorage.getItem('claimcortex_token')) {
+            window.location.href = 'auth.html';
+        }
+    </script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen p-8">
-    <div class="max-w-xl mx-auto bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-xl">
-        <h2 class="text-xl font-bold text-indigo-400 mb-4">Operations Engine Workspace</h2>
-        <input type="file" id="billFile" accept="image/*" class="block w-full text-sm text-slate-400 mb-4">
-        <button id="runAudit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-lg transition">Process Document Engine</button>
+    <div class="max-w-2xl mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h2 class="text-2xl font-black text-indigo-400">Operations Engine Workspace</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Upload asset document logs to trigger algorithmic parsing variables.</p>
+            </div>
+            <button id="logoutBtn" class="bg-slate-950 hover:bg-red-900/30 border border-slate-700 hover:border-red-900 text-slate-400 hover:text-red-400 font-bold font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
+                Logout Securely
+            </button>
+        </div>
+
+        <div class="bg-slate-950 p-6 rounded-xl border border-slate-700/50 mb-6">
+            <input type="file" id="billFile" accept="image/*" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:transition cursor-pointer">
+        </div>
+
+        <button id="runAudit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.99]">
+            Process Document Engine Audit
+        </button>
         
-        <div id="results" class="hidden mt-6 space-y-4 border-t border-slate-700 pt-4">
-            <div class="flex justify-between font-mono text-sm"><span>Total Found Audit Val:</span><span id="billVal" class="text-white font-bold">$0.00</span></div>
-            <div class="flex justify-between font-mono text-sm"><span>Recoverable Overcharges:</span><span id="saveVal" class="text-emerald-400 font-bold">$0.00</span></div>
-            <div id="findings" class="text-xs text-slate-400 bg-slate-950 p-3 rounded-lg space-y-1"></div>
-            <textarea id="letter" class="w-full h-32 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 outline-none" readonly></textarea>
+        <div id="results" class="hidden mt-8 space-y-6 border-t border-slate-700 pt-6">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Gross Billed</span>
+                    <div id="billVal" class="text-xl font-black text-white mt-1">$0.00</div>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center border-l-2 border-l-emerald-500">
+                    <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Savings Found</span>
+                    <div id="saveVal" class="text-xl font-black text-emerald-400 mt-1">$0.00</div>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center border-l-2 border-l-indigo-500">
+                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Our Fee (20%)</span>
+                    <div id="feeVal" class="text-xl font-black text-indigo-400 mt-1">$0.00</div>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Algorithmic Identification Findings:</span>
+                <div id="findings" class="text-xs text-slate-300 bg-slate-950 p-4 rounded-xl space-y-2 border border-slate-800 leading-relaxed font-mono"></div>
+            </div>
+
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Generated Executive Reclaim Appeal Document:</span>
+                <textarea id="letter" class="w-full h-48 bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl border border-slate-800 outline-none leading-relaxed" readonly></textarea>
+            </div>
         </div>
     </div>
+
     <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('claimcortex_token');
+            window.location.href = 'auth.html';
+        });
+
         document.getElementById('runAudit').addEventListener('click', async () => {
             const fileInput = document.getElementById('billFile');
-            if(fileInput.files.length === 0) return alert('Choose an image file first.');
+            if(fileInput.files.length === 0) return alert('Kindly allocate a document source image row first.');
+            
             const data = new FormData();
             data.append('file', fileInput.files[0]);
+            
             try {
                 const res = await fetch('http://127.0.0.1:8000/api/audit', { method: 'POST', body: data });
                 const json = await res.json();
+                
                 document.getElementById('billVal').innerText = `$${json.total_billed}`;
                 document.getElementById('saveVal').innerText = `$${json.potential_savings}`;
+                document.getElementById('feeVal').innerText = `$${json.our_twenty_percent_cut}`;
                 document.getElementById('letter').value = json.draft_appeal_letter;
                 
                 const findDiv = document.getElementById('findings');
                 findDiv.innerHTML = '';
-                json.findings.forEach(str => { findDiv.innerHTML += `• ${str}<br>`; });
+                json.findings.forEach(str => { 
+                    findDiv.innerHTML += `<div class="text-indigo-400 font-bold">✓ <span class="text-slate-300 font-sans font-normal">${str}</span></div>`; 
+                });
                 
                 document.getElementById('results').classList.remove('hidden');
-            } catch { alert('Engine offline.'); }
+            } catch { 
+                alert('Audit analysis connection execution broken.'); 
+            }
         });
     </script>
 </body>

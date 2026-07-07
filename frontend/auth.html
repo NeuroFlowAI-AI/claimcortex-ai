@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClaimCortex Gateway | Secure Authentication</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #ffffff 40%, #4c0519 100%); }
+    </style>
+</head>
+<body class="text-slate-900 font-sans min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-rose-950/10 w-full max-w-md">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-black tracking-tight text-rose-950">ClaimCortex <span class="text-rose-800">Auth</span></h2>
+            <p class="text-xs font-semibold text-rose-900/60 uppercase tracking-widest mt-1">Enterprise Audit Gateway Portal</p>
+        </div>
+
+        <div class="flex gap-4 mb-6 border-b border-rose-900/10 pb-4">
+            <button id="toggleLogin" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none">Log In</button>
+            <button id="toggleSignup" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none">Create Account</button>
+        </div>
+
+        <form id="authForm" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wide text-rose-950 mb-1">Username / Corporate Key</label>
+                <input type="text" id="username" required class="w-full bg-white border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm outline-none transition">
+            </div>
+            <div>
+                <label class="block text-xs font-bold uppercase tracking-wide text-rose-950 mb-1">Secure Password</label>
+                <input type="password" id="password" required class="w-full bg-white border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm outline-none transition">
+            </div>
+            <button type="submit" id="submitBtn" class="w-full bg-rose-900 hover:bg-rose-800 text-white font-bold tracking-wider uppercase text-xs py-4 rounded-xl shadow-md transition-all">
+                Authenticate Session
+            </button>
+        </form>
+    </div>
+
+    <script>
+        let mode = 'login'; 
+        const toggleLogin = document.getElementById('toggleLogin');
+        const toggleSignup = document.getElementById('toggleSignup');
+        const submitBtn = document.getElementById('submitBtn');
+
+        toggleLogin.addEventListener('click', () => {
+            mode = 'login';
+            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none";
+            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none";
+            submitBtn.innerText = "Authenticate Session";
+        });
+
+        toggleSignup.addEventListener('click', () => {
+            mode = 'signup';
+            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none";
+            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none";
+            submitBtn.innerText = "Initialize Account Registry";
+        });
+
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = new FormData();
+            data.append('username', document.getElementById('username').value);
+            data.append('password', document.getElementById('password').value);
+
+            const endpoint = mode === 'login' ? 'login' : 'signup';
+
+            try {
+                const res = await fetch(`http://127.0.0.1:8000/api/${endpoint}`, { method: 'POST', body: data });
+                const json = await res.json();
+
+                if (!res.ok) {
+                    alert(json.detail || 'Authentication execution failure.');
+                    return;
+                }
+
+                if (mode === 'signup') {
+                    alert('Profile securely registered! Switching to Login.');
+                    toggleLogin.click();
+                    document.getElementById('password').value = '';
+                } else {
+                    // Login validation complete -> Save token and pass user to dashboard workspace
+                    localStorage.setItem('claimcortex_token', json.token);
+                    window.location.href = 'dashboard.html';
+                }
+            } catch {
+                alert('FastAPI server engine is completely offline.');
+            }
+        });
+    </script>
+</body>
+</html>
