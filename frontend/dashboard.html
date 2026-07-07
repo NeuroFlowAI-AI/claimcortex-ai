@@ -73,7 +73,8 @@
             data.append('file', fileInput.files[0]);
             
             try {
-                const res = await fetch('http://127.0.0.1:8000/api/audit', { method: 'POST', body: data });
+                // Connected directly to your live production Render parse cluster
+                const res = await fetch('https://claimcortex-ai.onrender.com/api/audit', { method: 'POST', body: data });
                 const json = await res.json();
                 
                 document.getElementById('billVal').innerText = `$${json.total_billed}`;
@@ -89,7 +90,7 @@
                 
                 document.getElementById('results').classList.remove('hidden');
             } catch { 
-                alert('Audit analysis connection execution broken.'); 
+                alert('Audit analysis connection execution failed.'); 
             }
         });
     </script>
