@@ -23,9 +23,16 @@ app.add_middleware(
 
 DB_FILE = "claimcortex.db"
 
+def get_db_connection():
+    """Generates a thread-safe connection with a high timeout to prevent locking."""
+    conn = sqlite3.connect(DB_FILE, timeout=30.0)
+    # Enable WAL mode for high concurrency handling in cloud environments
+    conn.execute("PRAGMA journal_mode=WAL;")
+    return conn
+
 def init_db():
     """Initializes high-performance database schema tracking pipelines and users."""
-    conn = sqlite3.connect(DB_FILE)
+    conn = get_db_connection()
     cursor = conn.cursor()
     # Inbound Leads Table
     cursor.execute("""
@@ -64,7 +71,7 @@ def simulate_realtime_email_alert(name: str, email: str, company: str):
 @app.post("/api/signup")
 async def signup(username: str = Form(...), password: str = Form(...)):
     try:
-        conn = sqlite3.connect(DB_FILE)
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
         conn.commit()
@@ -78,7 +85,7 @@ async def signup(username: str = Form(...), password: str = Form(...)):
 @app.post("/api/login")
 async def login(username: str = Form(...), password: str = Form(...)):
     try:
-        conn = sqlite3.connect(DB_FILE)
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT password FROM users WHERE username = ?", (username,))
         row = cursor.fetchone()
@@ -98,7 +105,7 @@ async def login(username: str = Form(...), password: str = Form(...)):
 @app.post("/api/leads")
 async def capture_lead(name: str = Form(...), email: str = Form(...), company: str = Form(...)):
     try:
-        conn = sqlite3.connect(DB_FILE)
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("INSERT INTO leads (name, email, company) VALUES (?, ?, ?)", (name, email, company))
         conn.commit()
@@ -111,7 +118,7 @@ async def capture_lead(name: str = Form(...), email: str = Form(...), company: s
 @app.get("/api/leads")
 async def get_leads():
     try:
-        conn = sqlite3.connect(DB_FILE)
+        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT id, name, email, company, timestamp FROM leads ORDER BY id DESC")
         rows = cursor.fetchall()
@@ -188,6 +195,5 @@ async def audit_bill(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     import uvicorn
-    # Use environment port parsing to ensure seamless live cloud hosting compatibility
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
