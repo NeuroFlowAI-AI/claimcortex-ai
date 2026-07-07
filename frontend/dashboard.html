@@ -2,107 +2,260 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClaimCortex Hub | Operational Environment</title>
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Client-Side Vector PDF Compiler Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         if (!localStorage.getItem('claimcortex_token')) {
             window.location.href = 'auth.html';
         }
     </script>
+    <style>
+        /* White & Wine Signature Theme Gradient */
+        body {
+            background: linear-gradient(135deg, #ffffff 0%, #fcf8f9 40%, #4c0519 100%);
+            background-attachment: fixed;
+        }
+        .wine-glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(76, 5, 25, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen p-8">
-    <div class="max-w-3xl mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
-        <div class="flex justify-between items-center mb-6">
+<body class="text-slate-900 min-h-screen p-4 md:p-8 relative">
+
+    <!-- Background Design Accent Elements -->
+    <div class="absolute top-10 left-10 text-[180px] font-black text-rose-950/[0.03] select-none pointer-events-none font-mono">∞</div>
+    <div class="absolute bottom-10 right-10 text-[160px] font-black text-white/[0.04] select-none pointer-events-none font-mono">☤</div>
+
+    <div class="max-w-4xl mx-auto wine-glass-panel p-6 md:p-10 rounded-3xl shadow-2xl relative z-10">
+        
+        <!-- Header Console Row Layout -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-rose-950/10 pb-6">
             <div>
-                <h2 class="text-2xl font-black text-indigo-400">Operations Engine Workspace</h2>
-                <p class="text-xs text-slate-400 mt-0.5">Upload single assets, image selections, or structured .zip files for infinite parallel execution extraction.</p>
+                <div class="text-[10px] font-mono font-bold text-rose-800 uppercase tracking-widest flex items-center gap-1">
+                    <span>☤ ClaimCortex Intelligence Core</span> 
+                    <span class="text-slate-400">|</span> 
+                    <span>Active Security Domain</span>
+                </div>
+                <h2 class="text-3xl font-black tracking-tight text-rose-950 mt-1">Audit Operations Workstation</h2>
             </div>
-            <button id="logoutBtn" class="bg-slate-950 hover:bg-red-900/30 border border-slate-700 hover:border-red-900 text-slate-400 hover:text-red-400 font-bold font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
-                Logout Securely
+            <button id="logoutBtn" class="bg-rose-950 text-white hover:bg-rose-900 font-bold font-mono text-[10px] uppercase tracking-wider px-4 py-2.5 rounded-xl transition shadow-md">
+                Secure Logout
             </button>
         </div>
 
-        <!-- High Scale Multi-File Input Field Slot -->
-        <div class="bg-slate-950 p-6 rounded-xl border border-slate-700/50 mb-6">
-            <input type="file" id="billFiles" multiple accept="image/*,.zip" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:transition cursor-pointer">
-            <p class="text-[10px] text-slate-500 mt-2 font-mono">Supports multiple continuous image files row arrays selection or nested compressed .zip packages.</p>
+        <!-- SPLIT OPERATION INTERFACE HUB -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            
+            <!-- Channel Node 1: Single Asset Audit Control Container -->
+            <div class="bg-white/90 p-6 rounded-2xl border border-rose-950/10 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-rose-950">Single Document Channel</h3>
+                        <span class="text-xs font-mono font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md">File Stream</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">Execute real-time text analysis extraction algorithms against one targeted medical invoice or insurance sheet.</p>
+                    <input type="file" id="singleFile" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-rose-950 file:text-white hover:file:bg-rose-900 file:transition cursor-pointer bg-slate-50 p-2.5 rounded-xl border border-dashed border-rose-950/20">
+                </div>
+                <button id="runSingleAudit" class="w-full bg-rose-950 hover:bg-rose-900 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl mt-6 transition shadow-md">
+                    Execute Single Audit Channel
+                </button>
+            </div>
+
+            <!-- Channel Node 2: Heavy Bulk Compression Array Control Container -->
+            <div class="bg-white/90 p-6 rounded-2xl border border-rose-950/10 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-sm font-black uppercase tracking-wider text-rose-950">Infinite Bulk Repository</h3>
+                        <span class="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md">ZIP / Array Stream</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">Pipe a massive array stack of multiple image assets or high-volume nested corporate packages together smoothly.</p>
+                    <input type="file" id="bulkFiles" multiple accept="image/*,.zip" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-bold file:bg-indigo-950 file:text-white hover:file:bg-indigo-900 file:transition cursor-pointer bg-slate-50 p-2.5 rounded-xl border border-dashed border-indigo-950/20">
+                </div>
+                <button id="runBulkAudit" class="w-full bg-indigo-950 hover:bg-indigo-900 text-white font-bold text-xs uppercase tracking-wider py-3.5 rounded-xl mt-6 transition shadow-md">
+                    Process Bulk Repository Pipeline
+                </button>
+            </div>
+
         </div>
 
-        <button id="runAudit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.99]">
-            Process Bulk Document Engine Audit
-        </button>
-        
-        <!-- Interactive Analysis Matrix Presentation Outputs -->
-        <div id="results" class="hidden mt-8 space-y-6 border-t border-slate-700 pt-6">
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Gross Billed</span>
-                    <div id="billVal" class="text-xl font-black text-white mt-1">$0.00</div>
+        <!-- DYNAMIC DATA PRESENTATION INTERFACE CORE (HIDDEN UNTIL LOAD) -->
+        <div id="results" class="hidden mt-8 space-y-6 border-t border-rose-950/10 pt-8 animate-fade-in">
+            
+            <!-- Financial Metric Analytics Display Cards row grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-rose-950/10 text-center shadow-sm">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Gross Capital Audited</span>
+                    <div id="billVal" class="text-2xl font-black text-rose-950 mt-1">$0.00</div>
                 </div>
-                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center border-l-2 border-l-emerald-500">
-                    <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Savings Found</span>
-                    <div id="saveVal" class="text-xl font-black text-emerald-400 mt-1">$0.00</div>
+                <div class="bg-white p-4 rounded-xl border border-emerald-600/20 border-t-4 border-t-emerald-600 text-center shadow-sm">
+                    <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Identified Savings</span>
+                    <div id="saveVal" class="text-2xl font-black text-emerald-600 mt-1">$0.00</div>
                 </div>
-                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center border-l-2 border-l-indigo-500">
-                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Our Fee (20%)</span>
-                    <div id="feeVal" class="text-xl font-black text-indigo-400 mt-1">$0.00</div>
+                <div class="bg-white p-4 rounded-xl border border-rose-700/20 border-t-4 border-t-rose-700 text-center shadow-sm">
+                    <span class="text-[10px] font-bold text-rose-800 uppercase tracking-widest">Our Recovery Dividend (20%)</span>
+                    <div id="feeVal" class="text-2xl font-black text-rose-900 mt-1">$0.00</div>
                 </div>
             </div>
 
-            <div class="space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Algorithmic Identification Findings (Aggregated Matrix):</span>
-                <div id="findings" class="text-xs text-slate-300 bg-slate-950 p-4 rounded-xl space-y-2 border border-slate-800 leading-relaxed font-mono max-h-48 overflow-y-auto"></div>
+            <!-- Interactive Action Button Group Module Row -->
+            <div class="flex justify-end">
+                <button id="downloadPDF" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-mono uppercase tracking-wider px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-md">
+                    <span>⇓</span> Download Certified PDF Audit Report
+                </button>
             </div>
 
+            <!-- Algorithmic Finding Metrics Track Record View -->
             <div class="space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Generated Executive Reclaim Master Appeal Ledger:</span>
-                <textarea id="letter" class="w-full h-64 bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl border border-slate-800 outline-none leading-relaxed" readonly></textarea>
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">System Integrity Explanatory Vectors:</span>
+                <div id="findings" class="text-xs text-slate-700 bg-white p-4 rounded-xl space-y-2 border border-rose-950/10 leading-relaxed font-mono max-h-40 overflow-y-auto shadow-inner"></div>
             </div>
+
+            <!-- Master Document Appeal Registry Output Screen View -->
+            <div class="space-y-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">Generated Corporate Dispute Override Statement Document:</span>
+                <textarea id="letter" class="w-full h-48 bg-white text-slate-800 font-mono text-xs p-4 rounded-xl border border-rose-950/10 shadow-inner outline-none leading-relaxed" readonly></textarea>
+            </div>
+
         </div>
     </div>
 
+    <!-- Client-Side PDF Generation Implementation Architecture -->
     <script>
+        const { jsPDF } = window.jspdf;
+
         document.getElementById('logoutBtn').addEventListener('click', () => {
             localStorage.removeItem('claimcortex_token');
             window.location.href = 'auth.html';
         });
 
-        document.getElementById('runAudit').addEventListener('click', async () => {
-            const fileInput = document.getElementById('billFiles');
-            if(fileInput.files.length === 0) return alert('Kindly allocate one or multiple document source rows first.');
-            
-            const runBtn = document.getElementById('runAudit');
-            runBtn.innerText = "Parsing Stream Processing Assets... Please Hold";
-            runBtn.disabled = true;
+        // Functional Pipeline Execution Wrapper for Network Routing Core requests
+        async function runAuditPipeline(endpoint, inputElement, actionButton, buttonOriginalText) {
+            const fileInput = document.getElementById(inputElement);
+            if (fileInput.files.length === 0) {
+                return alert('Kindly allocate valid file sources to the target channel platform input first.');
+            }
+
+            actionButton.innerText = "Processing Cloud Audit Streams...";
+            actionButton.disabled = true;
 
             const data = new FormData();
-            // Append every selected asset inside the stream array stack natively
-            for (let i = 0; i < fileInput.files.length; i++) {
-                data.append('files', fileInput.files[i]);
-            }
             
+            if (inputElement === 'bulkFiles') {
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    data.append('files', fileInput.files[i]);
+                }
+            } else {
+                data.append('file', fileInput.files[0]);
+            }
+
             try {
-                const res = await fetch('https://claimcortex-ai.onrender.com/api/audit-bulk', { method: 'POST', body: data });
+                const res = await fetch(`https://claimcortex-ai.onrender.com/api/${endpoint}`, {
+                    method: 'POST',
+                    body: data
+                });
                 const json = await res.json();
-                
+
+                if (!res.ok) throw new Error(json.detail || 'Processing Error.');
+
+                // Force clean data values refresh, instantly clearing old text modifications cache remnants
                 document.getElementById('billVal').innerText = `$${json.total_billed}`;
                 document.getElementById('saveVal').innerText = `$${json.potential_savings}`;
                 document.getElementById('feeVal').innerText = `$${json.our_twenty_percent_cut}`;
                 document.getElementById('letter').value = json.draft_appeal_letter;
-                
+
                 const findDiv = document.getElementById('findings');
                 findDiv.innerHTML = '';
-                json.findings.forEach(str => { 
-                    findDiv.innerHTML += `<div class="text-indigo-400 font-bold">✓ <span class="text-slate-300 font-sans font-normal">${str}</span></div>`; 
+                json.findings.forEach(str => {
+                    findDiv.innerHTML += `<div class="text-rose-800 font-bold">✓ <span class="text-slate-600 font-sans font-normal">${str}</span></div>`;
                 });
-                
+
                 document.getElementById('results').classList.remove('hidden');
-            } catch { 
-                alert('Audit analysis connection execution failed.'); 
+                // Scroll layout interface into display area smoothly
+                document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (err) {
+                alert(`Execution Error: ${err.message}`);
             } finally {
-                runBtn.innerText = "Process Bulk Document Engine Audit";
-                runBtn.disabled = false;
+                actionButton.innerText = buttonOriginalText;
+                actionButton.disabled = false;
             }
+        }
+
+        // Action Bindings Link Configurations
+        document.getElementById('runSingleAudit').addEventListener('click', function() {
+            runAuditPipeline('audit-single', 'singleFile', this, 'Execute Single Audit Channel');
+        });
+
+        document.getElementById('runBulkAudit').addEventListener('click', function() {
+            runAuditPipeline('audit-bulk', 'bulkFiles', this, 'Process Bulk Repository Pipeline');
+        });
+
+        // Certified Vector PDF Statement Generation Construction Module
+        document.getElementById('downloadPDF').addEventListener('click', () => {
+            const doc = new jsPDF();
+            
+            const grossBilled = document.getElementById('billVal').innerText;
+            const savingsFound = document.getElementById('saveVal').innerText;
+            const dividendFee = document.getElementById('feeVal').innerText;
+            const narrativeText = document.getElementById('letter').value;
+
+            // Corporate Style Sheet Layout Core Settings definitions
+            doc.setFillColor(76, 5, 25); // Premium Corporate Wine
+            doc.rect(0, 0, 210, 40, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(22);
+            doc.text("CLAIMCORTEX AI COMPLIANCE REPORT", 14, 26);
+            
+            doc.setFontSize(9);
+            doc.setFont("courier", "normal");
+            doc.text("SECURITY PROTOCOL ANALYSIS BLOCK VERIFICATION // SYSLOG", 14, 35);
+
+            // Invoice Overview Section Cards Drawing
+            doc.setTextColor(76, 5, 25);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("1. AUDIT FINANCIAL SUMMARY", 14, 55);
+
+            doc.setDrawColor(76, 5, 25);
+            doc.setLineWidth(0.5);
+            doc.line(14, 58, 196, 58);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(11);
+            doc.setTextColor(60, 60, 60);
+            doc.text(`Gross Capital Assets Evaluated:  ${grossBilled}`, 16, 68);
+            doc.text(`Identified Overcharge Savings:     ${savingsFound}`, 16, 76);
+            doc.text(`ClaimCortex Service Dividend (20%): ${dividendFee}`, 16, 84);
+
+            // Legal Override Statement text wrapping parameters
+            doc.setTextColor(76, 5, 25);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text("2. DISPUTE RECLAMATION STATEMENT RECONCILIATION", 14, 102);
+            doc.line(14, 105, 196, 105);
+
+            doc.setFont("courier", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(40, 40, 40);
+            
+            const splitLines = doc.splitTextToSize(narrativeText, 180);
+            doc.text(splitLines, 14, 115);
+
+            // Institutional Footer verification
+            doc.setFont("helvetica", "italic");
+            doc.setFontSize(8);
+            doc.setTextColor(120, 120, 120);
+            doc.text("Certified cryptographic validation signature generated live by ClaimCortex Core Systems.", 14, 285);
+
+            doc.save("ClaimCortex_Audit_Certificate_Master.pdf");
         });
     </script>
 </body>
