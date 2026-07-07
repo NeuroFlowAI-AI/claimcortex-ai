@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClaimCortex Hub | Operational Environment</title>
-    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Client-Side Vector PDF Compiler Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         if (!localStorage.getItem('claimcortex_token')) {
@@ -14,7 +12,6 @@
         }
     </script>
     <style>
-        /* White & Wine Signature Theme Gradient */
         body {
             background: linear-gradient(135deg, #ffffff 0%, #fcf8f9 40%, #4c0519 100%);
             background-attachment: fixed;
@@ -28,13 +25,15 @@
 </head>
 <body class="text-slate-900 min-h-screen p-4 md:p-8 relative">
 
-    <!-- Background Design Accent Elements -->
-    <div class="absolute top-10 left-10 text-[180px] font-black text-rose-950/[0.03] select-none pointer-events-none font-mono">∞</div>
-    <div class="absolute bottom-10 right-10 text-[160px] font-black text-white/[0.04] select-none pointer-events-none font-mono">☤</div>
+    <div class="absolute top-10 left-10 text-[180px] font-black text-rose-950/[0.03] select-none pointer-events-none font-mono">
+        ∞
+    </div>
+    <div class="absolute bottom-10 right-10 text-[160px] font-black text-white/[0.04] select-none pointer-events-none font-mono">
+        ☤
+    </div>
 
     <div class="max-w-4xl mx-auto wine-glass-panel p-6 md:p-10 rounded-3xl shadow-2xl relative z-10">
         
-        <!-- Header Console Row Layout -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-rose-950/10 pb-6">
             <div>
                 <div class="text-[10px] font-mono font-bold text-rose-800 uppercase tracking-widest flex items-center gap-1">
@@ -49,10 +48,8 @@
             </button>
         </div>
 
-        <!-- SPLIT OPERATION INTERFACE HUB -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             
-            <!-- Channel Node 1: Single Asset Audit Control Container -->
             <div class="bg-white/90 p-6 rounded-2xl border border-rose-950/10 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-3">
@@ -67,7 +64,6 @@
                 </button>
             </div>
 
-            <!-- Channel Node 2: Heavy Bulk Compression Array Control Container -->
             <div class="bg-white/90 p-6 rounded-2xl border border-rose-950/10 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-3">
@@ -84,39 +80,34 @@
 
         </div>
 
-        <!-- DYNAMIC DATA PRESENTATION INTERFACE CORE (HIDDEN UNTIL LOAD) -->
-        <div id="results" class="hidden mt-8 space-y-6 border-t border-rose-950/10 pt-8 animate-fade-in">
+        <div id="results" class="hidden mt-8 space-y-6 border-t border-rose-950/10 pt-8">
             
-            <!-- Financial Metric Analytics Display Cards row grid -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-white p-4 rounded-xl border border-rose-950/10 text-center shadow-sm">
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Gross Capital Audited</span>
-                    <div id="billVal" class="text-2xl font-black text-rose-950 mt-1">$0.00</div>
+                    <div id="billVal" class="text-2xl font-black text-rose-950 mt-1">0.00</div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-emerald-600/20 border-t-4 border-t-emerald-600 text-center shadow-sm">
                     <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Identified Savings</span>
-                    <div id="saveVal" class="text-2xl font-black text-emerald-600 mt-1">$0.00</div>
+                    <div id="saveVal" class="text-2xl font-black text-emerald-600 mt-1">0.00</div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-rose-700/20 border-t-4 border-t-rose-700 text-center shadow-sm">
                     <span class="text-[10px] font-bold text-rose-800 uppercase tracking-widest">Our Recovery Dividend (20%)</span>
-                    <div id="feeVal" class="text-2xl font-black text-rose-900 mt-1">$0.00</div>
+                    <div id="feeVal" class="text-2xl font-black text-rose-900 mt-1">0.00</div>
                 </div>
             </div>
 
-            <!-- Interactive Action Button Group Module Row -->
             <div class="flex justify-end">
                 <button id="downloadPDF" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold font-mono uppercase tracking-wider px-5 py-3 rounded-xl transition flex items-center gap-2 shadow-md">
                     <span>⇓</span> Download Certified PDF Audit Report
                 </button>
             </div>
 
-            <!-- Algorithmic Finding Metrics Track Record View -->
             <div class="space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">System Integrity Explanatory Vectors:</span>
                 <div id="findings" class="text-xs text-slate-700 bg-white p-4 rounded-xl space-y-2 border border-rose-950/10 leading-relaxed font-mono max-h-40 overflow-y-auto shadow-inner"></div>
             </div>
 
-            <!-- Master Document Appeal Registry Output Screen View -->
             <div class="space-y-2">
                 <span class="text-xs font-bold uppercase tracking-wider text-rose-900 font-mono">Generated Corporate Dispute Override Statement Document:</span>
                 <textarea id="letter" class="w-full h-48 bg-white text-slate-800 font-mono text-xs p-4 rounded-xl border border-rose-950/10 shadow-inner outline-none leading-relaxed" readonly></textarea>
@@ -125,8 +116,8 @@
         </div>
     </div>
 
-    <!-- Client-Side PDF Generation Implementation Architecture -->
     <script>
+        let globalCurrency = "$";
         const { jsPDF } = window.jspdf;
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -134,7 +125,6 @@
             window.location.href = 'auth.html';
         });
 
-        // Functional Pipeline Execution Wrapper for Network Routing Core requests
         async function runAuditPipeline(endpoint, inputElement, actionButton, buttonOriginalText) {
             const fileInput = document.getElementById(inputElement);
             if (fileInput.files.length === 0) {
@@ -145,7 +135,6 @@
             actionButton.disabled = true;
 
             const data = new FormData();
-            
             if (inputElement === 'bulkFiles') {
                 for (let i = 0; i < fileInput.files.length; i++) {
                     data.append('files', fileInput.files[i]);
@@ -163,10 +152,12 @@
 
                 if (!res.ok) throw new Error(json.detail || 'Processing Error.');
 
-                // Force clean data values refresh, instantly clearing old text modifications cache remnants
-                document.getElementById('billVal').innerText = `$${json.total_billed}`;
-                document.getElementById('saveVal').innerText = `$${json.potential_savings}`;
-                document.getElementById('feeVal').innerText = `$${json.our_twenty_percent_cut}`;
+                globalCurrency = json.currency || "$";
+
+                // Map results dynamically with extracted currency symbols
+                document.getElementById('billVal').innerText = `${globalCurrency}${json.total_billed}`;
+                document.getElementById('saveVal').innerText = `${globalCurrency}${json.potential_savings}`;
+                document.getElementById('feeVal').innerText = `${globalCurrency}${json.our_twenty_percent_cut}`;
                 document.getElementById('letter').value = json.draft_appeal_letter;
 
                 const findDiv = document.getElementById('findings');
@@ -176,7 +167,6 @@
                 });
 
                 document.getElementById('results').classList.remove('hidden');
-                // Scroll layout interface into display area smoothly
                 document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 
             } catch (err) {
@@ -187,7 +177,6 @@
             }
         }
 
-        // Action Bindings Link Configurations
         document.getElementById('runSingleAudit').addEventListener('click', function() {
             runAuditPipeline('audit-single', 'singleFile', this, 'Execute Single Audit Channel');
         });
@@ -196,17 +185,14 @@
             runAuditPipeline('audit-bulk', 'bulkFiles', this, 'Process Bulk Repository Pipeline');
         });
 
-        // Certified Vector PDF Statement Generation Construction Module
         document.getElementById('downloadPDF').addEventListener('click', () => {
             const doc = new jsPDF();
-            
             const grossBilled = document.getElementById('billVal').innerText;
             const savingsFound = document.getElementById('saveVal').innerText;
             const dividendFee = document.getElementById('feeVal').innerText;
             const narrativeText = document.getElementById('letter').value;
 
-            // Corporate Style Sheet Layout Core Settings definitions
-            doc.setFillColor(76, 5, 25); // Premium Corporate Wine
+            doc.setFillColor(76, 5, 25);
             doc.rect(0, 0, 210, 40, 'F');
 
             doc.setTextColor(255, 255, 255);
@@ -218,7 +204,6 @@
             doc.setFont("courier", "normal");
             doc.text("SECURITY PROTOCOL ANALYSIS BLOCK VERIFICATION // SYSLOG", 14, 35);
 
-            // Invoice Overview Section Cards Drawing
             doc.setTextColor(76, 5, 25);
             doc.setFont("helvetica", "bold");
             doc.setFontSize(14);
@@ -235,7 +220,6 @@
             doc.text(`Identified Overcharge Savings:     ${savingsFound}`, 16, 76);
             doc.text(`ClaimCortex Service Dividend (20%): ${dividendFee}`, 16, 84);
 
-            // Legal Override Statement text wrapping parameters
             doc.setTextColor(76, 5, 25);
             doc.setFont("helvetica", "bold");
             doc.setFontSize(14);
@@ -249,7 +233,6 @@
             const splitLines = doc.splitTextToSize(narrativeText, 180);
             doc.text(splitLines, 14, 115);
 
-            // Institutional Footer verification
             doc.setFont("helvetica", "italic");
             doc.setFontSize(8);
             doc.setTextColor(120, 120, 120);
