@@ -6,69 +6,111 @@
     <title>ClaimCortex Gateway | Secure Authentication</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: linear-gradient(135deg, #ffffff 40%, #4c0519 100%); }
+        body { background: linear-gradient(135deg, #0f172a 40%, #4c0519 100%); }
     </style>
 </head>
-<body class="text-slate-900 font-sans min-h-screen flex items-center justify-center p-4">
+<body class="text-slate-100 font-sans min-h-screen flex items-center justify-center p-4">
 
-    <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-rose-950/10 w-full max-w-md">
+    <div class="bg-slate-900/90 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-slate-800 w-full max-w-md">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-black tracking-tight text-rose-950">ClaimCortex <span class="text-rose-800">Auth</span></h2>
-            <p class="text-xs font-semibold text-rose-900/60 uppercase tracking-widest mt-1">Enterprise Audit Gateway Portal</p>
+            <h2 class="text-3xl font-black tracking-tight text-white">ClaimCortex <span class="text-indigo-500">Auth</span></h2>
+            <p id="portalSubtitle" class="text-xs font-semibold text-slate-400 uppercase tracking-widest mt-1">Enterprise Audit Gateway Portal</p>
         </div>
 
         <!-- Toggle Controls -->
-        <div class="flex gap-4 mb-6 border-b border-rose-900/10 pb-4">
-            <button id="toggleLogin" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none">Log In</button>
-            <button id="toggleSignup" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none">Create Account</button>
+        <div id="tabBar" class="flex gap-4 mb-6 border-b border-slate-800 pb-4">
+            <button id="toggleLogin" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-indigo-400 border-b-2 border-indigo-500 pb-2 outline-none">Log In</button>
+            <button id="toggleSignup" class="flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-500 pb-2 outline-none">Create Account</button>
         </div>
 
         <!-- Authentication Form Module -->
         <form id="authForm" class="space-y-4">
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wide text-rose-950 mb-1">Username / Corporate Key</label>
-                <input type="text" id="username" required class="w-full bg-white border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm outline-none transition">
+                <label id="userLabel" class="block text-xs font-bold uppercase tracking-wide text-slate-400 mb-1">Username / Corporate Key</label>
+                <input type="text" id="username" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white rounded-xl px-4 py-3 text-sm outline-none transition">
             </div>
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wide text-rose-950 mb-1">Secure Password</label>
-                <input type="password" id="password" required class="w-full bg-white border border-rose-900/10 focus:border-rose-800 rounded-xl px-4 py-3 text-sm outline-none transition">
+                <label id="passLabel" class="block text-xs font-bold uppercase tracking-wide text-slate-400 mb-1">Secure Password</label>
+                <input type="password" id="password" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 text-white rounded-xl px-4 py-3 text-sm outline-none transition">
             </div>
-            <button type="submit" id="submitBtn" class="w-full bg-rose-900 hover:bg-rose-800 text-white font-bold tracking-wider uppercase text-xs py-4 rounded-xl shadow-md transition-all">
+            <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold tracking-wider uppercase text-xs py-4 rounded-xl shadow-md transition-all">
                 Authenticate Session
             </button>
         </form>
+
+        <div class="text-center mt-6">
+            <button id="toggleRecover" class="text-xs text-slate-500 hover:text-indigo-400 underline transition outline-none">Forgot Corporate Access Key?</button>
+        </div>
     </div>
 
     <script>
         let mode = 'login'; 
         const toggleLogin = document.getElementById('toggleLogin');
         const toggleSignup = document.getElementById('toggleSignup');
+        const toggleRecover = document.getElementById('toggleRecover');
         const submitBtn = document.getElementById('submitBtn');
+        const portalSubtitle = document.getElementById('portalSubtitle');
+        const userLabel = document.getElementById('userLabel');
+        const passLabel = document.getElementById('passLabel');
+        const authForm = document.getElementById('authForm');
+        const tabBar = document.getElementById('tabBar');
 
         toggleLogin.addEventListener('click', () => {
             mode = 'login';
-            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none";
-            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none";
+            tabBar.classList.remove('hidden');
+            portalSubtitle.innerText = "Enterprise Audit Gateway Portal";
+            userLabel.innerText = "Username / Corporate Key";
+            passLabel.innerText = "Secure Password";
+            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-indigo-400 border-b-2 border-indigo-500 pb-2 outline-none";
+            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-500 pb-2 outline-none";
             submitBtn.innerText = "Authenticate Session";
+            toggleRecover.innerText = "Forgot Corporate Access Key?";
         });
 
         toggleSignup.addEventListener('click', () => {
             mode = 'signup';
-            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-rose-900 border-b-2 border-rose-900 pb-2 outline-none";
-            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-400 pb-2 outline-none";
+            tabBar.classList.remove('hidden');
+            portalSubtitle.innerText = "Enterprise Audit Gateway Portal";
+            userLabel.innerText = "Username / Corporate Key";
+            passLabel.innerText = "Secure Password";
+            toggleSignup.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-indigo-400 border-b-2 border-indigo-500 pb-2 outline-none";
+            toggleLogin.className = "flex-1 text-center font-bold text-xs uppercase tracking-wider text-slate-500 pb-2 outline-none";
             submitBtn.innerText = "Initialize Account Registry";
+            toggleRecover.innerText = "Forgot Corporate Access Key?";
         });
 
-        document.getElementById('authForm').addEventListener('submit', async (e) => {
+        toggleRecover.addEventListener('click', () => {
+            if(mode !== 'recover') {
+                mode = 'recover';
+                tabBar.classList.add('hidden');
+                portalSubtitle.innerText = "Credential Reclamation Vault";
+                userLabel.innerText = "Confirm Registered Username";
+                passLabel.innerText = "Define New Secure Password";
+                submitBtn.innerText = "Execute Override Access Recovery";
+                toggleRecover.innerText = "Return to Gateway Portal Login";
+            } else {
+                toggleLogin.click();
+            }
+        });
+
+        authForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const data = new FormData();
             data.append('username', document.getElementById('username').value);
-            data.append('password', document.getElementById('password').value);
-
-            const endpoint = mode === 'login' ? 'login' : 'signup';
+            
+            let endpoint = '';
+            if (mode === 'login') {
+                endpoint = 'login';
+                data.append('password', document.getElementById('password').value);
+            } else if (mode === 'signup') {
+                endpoint = 'signup';
+                data.append('password', document.getElementById('password').value);
+            } else {
+                endpoint = 'recover-password';
+                data.append('new_password', document.getElementById('password').value);
+            }
 
             try {
-                // Pointing directly to your live production Render API instance
                 const res = await fetch(`https://claimcortex-ai.onrender.com/api/${endpoint}`, { method: 'POST', body: data });
                 const json = await res.json();
 
@@ -79,6 +121,10 @@
 
                 if (mode === 'signup') {
                     alert('Profile securely registered! Switching to Login.');
+                    toggleLogin.click();
+                    document.getElementById('password').value = '';
+                } else if (mode === 'recover') {
+                    alert('Credential validation verified. Access password has been re-routed.');
                     toggleLogin.click();
                     document.getElementById('password').value = '';
                 } else {

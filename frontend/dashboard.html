@@ -5,32 +5,34 @@
     <title>ClaimCortex Hub | Operational Environment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Security Gate: Redirect users immediately if token verification is missing
         if (!localStorage.getItem('claimcortex_token')) {
             window.location.href = 'auth.html';
         }
     </script>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen p-8">
-    <div class="max-w-2xl mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
+    <div class="max-w-3xl mx-auto bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
         <div class="flex justify-between items-center mb-6">
             <div>
                 <h2 class="text-2xl font-black text-indigo-400">Operations Engine Workspace</h2>
-                <p class="text-xs text-slate-400 mt-0.5">Upload asset document logs to trigger algorithmic parsing variables.</p>
+                <p class="text-xs text-slate-400 mt-0.5">Upload single assets, image selections, or structured .zip files for infinite parallel execution extraction.</p>
             </div>
             <button id="logoutBtn" class="bg-slate-950 hover:bg-red-900/30 border border-slate-700 hover:border-red-900 text-slate-400 hover:text-red-400 font-bold font-mono text-[10px] uppercase tracking-wider px-3 py-1.5 rounded-lg transition">
                 Logout Securely
             </button>
         </div>
 
+        <!-- High Scale Multi-File Input Field Slot -->
         <div class="bg-slate-950 p-6 rounded-xl border border-slate-700/50 mb-6">
-            <input type="file" id="billFile" accept="image/*" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:transition cursor-pointer">
+            <input type="file" id="billFiles" multiple accept="image/*,.zip" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 file:transition cursor-pointer">
+            <p class="text-[10px] text-slate-500 mt-2 font-mono">Supports multiple continuous image files row arrays selection or nested compressed .zip packages.</p>
         </div>
 
         <button id="runAudit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-xl shadow-lg transition-all transform active:scale-[0.99]">
-            Process Document Engine Audit
+            Process Bulk Document Engine Audit
         </button>
         
+        <!-- Interactive Analysis Matrix Presentation Outputs -->
         <div id="results" class="hidden mt-8 space-y-6 border-t border-slate-700 pt-6">
             <div class="grid grid-cols-3 gap-4">
                 <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
@@ -48,13 +50,13 @@
             </div>
 
             <div class="space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Algorithmic Identification Findings:</span>
-                <div id="findings" class="text-xs text-slate-300 bg-slate-950 p-4 rounded-xl space-y-2 border border-slate-800 leading-relaxed font-mono"></div>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Algorithmic Identification Findings (Aggregated Matrix):</span>
+                <div id="findings" class="text-xs text-slate-300 bg-slate-950 p-4 rounded-xl space-y-2 border border-slate-800 leading-relaxed font-mono max-h-48 overflow-y-auto"></div>
             </div>
 
             <div class="space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Generated Executive Reclaim Appeal Document:</span>
-                <textarea id="letter" class="w-full h-48 bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl border border-slate-800 outline-none leading-relaxed" readonly></textarea>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Generated Executive Reclaim Master Appeal Ledger:</span>
+                <textarea id="letter" class="w-full h-64 bg-slate-950 text-slate-300 font-mono text-xs p-4 rounded-xl border border-slate-800 outline-none leading-relaxed" readonly></textarea>
             </div>
         </div>
     </div>
@@ -66,15 +68,21 @@
         });
 
         document.getElementById('runAudit').addEventListener('click', async () => {
-            const fileInput = document.getElementById('billFile');
-            if(fileInput.files.length === 0) return alert('Kindly allocate a document source image row first.');
+            const fileInput = document.getElementById('billFiles');
+            if(fileInput.files.length === 0) return alert('Kindly allocate one or multiple document source rows first.');
             
+            const runBtn = document.getElementById('runAudit');
+            runBtn.innerText = "Parsing Stream Processing Assets... Please Hold";
+            runBtn.disabled = true;
+
             const data = new FormData();
-            data.append('file', fileInput.files[0]);
+            // Append every selected asset inside the stream array stack natively
+            for (let i = 0; i < fileInput.files.length; i++) {
+                data.append('files', fileInput.files[i]);
+            }
             
             try {
-                // Connected directly to your live production Render parse cluster
-                const res = await fetch('https://claimcortex-ai.onrender.com/api/audit', { method: 'POST', body: data });
+                const res = await fetch('https://claimcortex-ai.onrender.com/api/audit-bulk', { method: 'POST', body: data });
                 const json = await res.json();
                 
                 document.getElementById('billVal').innerText = `$${json.total_billed}`;
@@ -91,6 +99,9 @@
                 document.getElementById('results').classList.remove('hidden');
             } catch { 
                 alert('Audit analysis connection execution failed.'); 
+            } finally {
+                runBtn.innerText = "Process Bulk Document Engine Audit";
+                runBtn.disabled = false;
             }
         });
     </script>
