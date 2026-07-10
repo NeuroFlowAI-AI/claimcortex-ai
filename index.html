@@ -21,19 +21,62 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(76, 5, 25, 0.1);
         }
+
+        /* --- ADVANCED 3D SIMULTANEOUS KINETIC ANIMATIONS --- */
+        @keyframes floatAndSpinInfinity {
+            0% {
+                transform: translateY(0px) rotateX(20deg) rotateY(0deg) rotateZ(0deg);
+            }
+            50% {
+                transform: translateY(-25px) rotateX(35deg) rotateY(180deg) rotateZ(10deg);
+            }
+            100% {
+                transform: translateY(0px) rotateX(20deg) rotateY(360deg) rotateZ(0deg);
+            }
+        }
+
+        @keyframes floatAndOrbitCaduceus {
+            0% {
+                transform: translateY(0px) rotateX(0deg) rotateY(360deg) scale(1);
+            }
+            50% {
+                transform: translateY(30px) rotateX(25deg) rotateY(180deg) scale(1.05);
+            }
+            100% {
+                transform: translateY(0px) rotateX(0deg) rotateY(0deg) scale(1);
+            }
+        }
+
+        .moving-infinity {
+            display: inline-block;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: floatAndSpinInfinity 12s infinite linear;
+        }
+
+        .moving-caduceus {
+            display: inline-block;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: floatAndOrbitCaduceus 16s infinite ease-in-out;
+        }
     </style>
 </head>
 <body class="text-slate-900 font-sans min-h-screen selection:bg-rose-900/20 relative overflow-x-hidden">
 
-    <div class="absolute top-20 left-10 text-[220px] font-black text-rose-950/[0.03] select-none pointer-events-none font-mono animate-pulse">∞</div>
-    <div class="absolute bottom-20 right-10 text-[180px] font-black text-white/[0.05] select-none pointer-events-none font-mono">☤</div>
+    <div class="absolute top-24 left-12 text-[160px] md:text-[240px] font-black text-rose-950/[0.04] select-none pointer-events-none font-mono z-0">
+        <span class="moving-infinity">∞</span>
+    </div>
+    <div class="absolute bottom-24 right-12 text-[140px] md:text-[200px] font-black text-white/[0.06] select-none pointer-events-none font-mono z-0">
+        <span class="moving-caduceus">☤</span>
+    </div>
 
     <nav class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center relative z-20">
         <div class="flex items-center gap-2">
-            <span class="text-rose-900 font-mono text-xl font-black">☤</span>
+            <span class="text-rose-900 font-mono text-xl font-black animate-spin" style="animation-duration: 4s;">☤</span>
             <span class="font-black text-xl tracking-tight text-rose-950">ClaimCortex <span class="text-rose-700 font-light">AI</span></span>
         </div>
-        <a href="frontend/auth.html" class="bg-rose-950 hover:bg-rose-900 text-white font-bold font-mono text-[10px] uppercase tracking-wider px-5 py-2.5 rounded-xl transition shadow-md">
+        <a href="frontend/auth.html" class="bg-rose-950 text-white hover:bg-rose-900 font-bold font-mono text-[10px] uppercase tracking-wider px-5 py-2.5 rounded-xl transition shadow-md">
             Client Login
         </a>
     </nav>
@@ -50,7 +93,7 @@
         </p>
         
         <div class="w-full flex justify-center mb-16">
-            <a href="frontend/auth.html" class="w-full sm:w-auto bg-rose-950 hover:bg-rose-900 text-white font-bold px-10 py-5 rounded-2xl shadow-xl shadow-rose-950/20 transition-all text-center tracking-widest uppercase text-xs">
+            <a href="frontend/auth.html" class="w-full sm:w-auto bg-rose-950 hover:bg-rose-900 text-white font-bold px-10 py-5 rounded-2xl shadow-xl shadow-rose-950/20 transition-all transform active:scale-[0.99] text-center tracking-widest uppercase text-xs">
                 Launch Executive Security Gateway →
             </a>
         </div>
@@ -74,7 +117,7 @@
                 <div class="w-px h-8 bg-rose-950/20 hidden sm:block"></div>
                 <div>
                     <span class="block text-[9px] uppercase font-mono tracking-wider text-slate-400 mb-1">Direct Secure Line</span>
-                    <a href="tel:+2335405502850" class="font-mono font-black text-rose-850 hover:text-rose-700 text-base transition">+2335405502850</a>
+                    <a href="tel:+233545502850" class="font-mono font-black text-rose-900 hover:text-rose-700 text-base transition">+233545502850</a>
                 </div>
             </div>
         </div>
